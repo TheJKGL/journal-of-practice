@@ -1,5 +1,6 @@
 package com.malakhov.journalofpractice.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,7 +19,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "First name is mandatory")
     @Size(max = 50)
@@ -31,7 +32,11 @@ public class User {
     @Size(max = 50)
     private String surname;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", referencedColumnName = "id")
     private Role role;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credentials_id", referencedColumnName = "id")
+    private Credential credentials;
 }
