@@ -9,7 +9,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
-@Component
+@Component("authEntryPointJwtImpl")
 public class AuthEntryPointJwtImpl implements AuthenticationEntryPoint {
 
     //private static final Logger logger = LoggerFactory.getLogger(AuthEntryPointJwt.class);

@@ -1,4 +1,4 @@
-package com.malakhov.journalofpractice.models.request;
+package com.malakhov.journalofpractice.models.requests;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

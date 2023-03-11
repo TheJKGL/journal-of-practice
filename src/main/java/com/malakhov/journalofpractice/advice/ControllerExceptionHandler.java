@@ -5,6 +5,7 @@ import com.malakhov.journalofpractice.exception.ResourceAlreadyExistException;
 import com.malakhov.journalofpractice.exception.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -32,9 +33,17 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
         return new ExceptionResponse(e.getMessage(), request.getServletPath());
     }
 
-    /*@ExceptionHandler(AccessDeniedException.class)
-    public ExceptionResponse handleValidationException(AccessDeniedException e) {
-        return new ExceptionResponse()
-        return ResponseEntity.status(401).body("{\"status\":\"FAILED\", \"reason\": \"Unauthorized\"}");
-    }*/
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ExceptionResponse handleValidationException(AccessDeniedException e, HttpServletRequest request) {
+        //return new ExceptionResponse()
+        //return ResponseEntity.status(401).body("{\"status\":\"FAILED\", \"reason\": \"Unauthorized\"}");
+        return new ExceptionResponse(e.getMessage(), request.getServletPath());
+    }
+
+    @ExceptionHandler(value = {Exception.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ExceptionResponse handleException(Exception e, HttpServletRequest request) {
+        return new ExceptionResponse(e.getMessage(), request.getServletPath());
+    }
 }
